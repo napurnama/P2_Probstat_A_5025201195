@@ -445,20 +445,52 @@ Maka Kerjakan atau Carilah:
 
 ## Nomor 5
 ### Soal
-+`a.`
-+`b.`
-+`c.`
-+`d.`
-+`e.`
+Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu operasi (100 ̊C, 125 ̊C dan 150 ̊C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran cahaya tabung osiloskop. Percobaan dilakukan sebanyak 27 kali dan didapat data sebagai berikut: Data Hasil Eksperimen. Dengan data tersebut:
+
++ `a.` Buatlah plot sederhana untuk visualisasi data
++ `b.` Lakukan uji ANOVA dua arah
++ `c.` Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
++ `d.` Lakukan uji Tukey
++ `e.` Gunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey
+
 ### Penyelesaian
-+`a.`
-+`b.`
-+`c.`
-+`d.`
-+`e.`
++ `a.` Dibuat plot dengan cara berikut:
+    ```R
+    google_file <- "1aLUOdw_LVJq6VQrQEkuQhZ8FW43FemTJ"
+    light_data <- read.csv(sprintf("https://docs.google.com/uc?id=%s&export=download", google_file), header = T)
+    typeof(light_data)
+
+    light_data$Glass <- factor(light_data$Glass)
+    light_data$Temp <- factor(light_data$Temp)
+
+    ggplot(data = light_data, mapping = aes(x=Temp, y=Light, color=Glass)) + geom_point() + scale_color_manual(breaks = c("A", "B", "C"), values=c("red", "blue", "green"))
+    ```
+
++ `b.` Uji two-way anova dilakukan dengan cara berikut:
+    ```R
+    anova <- aov(Light ~ Glass*Temp, data = light_data)
+    summary(anova)
+    ```
+  
+    Didapatkan output seperti berikut:
+    ```
+                Df  Sum Sq Mean Sq F value   Pr(>F)    
+    Glass        2  150865   75432   206.4 3.89e-13 ***
+    Temp         2 1970335  985167  2695.3  < 2e-16 ***
+    Glass:Temp   4  290552   72638   198.7 1.25e-14 ***
+    Residuals   18    6579     366                     
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    ```
+
++ `c.`
++ `d.`
++ `e.`
 ### Dokumentasi
-+`a.`
-+`b.`
-+`c.`
-+`d.`
-+`e.`
++ `a.`
+  
+  ![5A](./Docs/5A.png)
+
++ `c.`
++ `d.`
++ `e.`
